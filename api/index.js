@@ -26,7 +26,7 @@ app.use(cors({
     origin: process.env.CLIENT_URL,
 }));
 
-app.use('/uploads/',express.static(__dirname + '/uploads/'));
+app.use('/api/uploads/',express.static(__dirname + '/uploads/'));
 
 async function getUserDataFromReq(req){
     return new Promise((resolve,reject) => {

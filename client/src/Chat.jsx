@@ -63,7 +63,7 @@ export default function Chat(){
         }));
         
         if(file){
-            axios.get('/api/messages/' + selectedUserId).then(res => {
+            axios.get('/messages/' + selectedUserId).then(res => {
                 setMessages(res.data);
             });
         }
@@ -79,7 +79,7 @@ export default function Chat(){
     }
 
     function logout(){
-        axios.post('/api/logout').then(() => {
+        axios.post('/logout').then(() => {
             setId(null);
             setUsername(null);
             setWs(null);
@@ -105,7 +105,7 @@ export default function Chat(){
     },[messages]);
 
     useEffect(() => {
-        axios.get('/api/people').then(res => {
+        axios.get('/people').then(res => {
             const offlinePeopleArr = res.data
                 .filter(p => p._id !== id)
                 .filter(p => !Object.keys(onlinePeople).includes(p._id));
@@ -121,7 +121,7 @@ export default function Chat(){
 
     useEffect(() => {
         if(selectedUserId){
-            axios.get('/api/messages/'+selectedUserId).then(res => {
+            axios.get('/messages/'+selectedUserId).then(res => {
                 setMessages(res.data);
             });
         }
@@ -192,7 +192,7 @@ export default function Chat(){
                                     {message.text}
                                     {message.file && (
                                         <div className="">
-                                            <a target="_blank" className="flex items-center gap-1 border-b" href={axios.defaults.baseURL + '/api/uploads/' + message.file}>
+                                            <a target="_blank" className="flex items-center gap-1 border-b" href={axios.defaults.baseURL + '/uploads/' + message.file}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                                                     <path fillRule="evenodd" d="M18.97 3.659a2.25 2.25 0 0 0-3.182 0l-10.94 10.94a3.75 3.75 0 1 0 5.304 5.303l7.693-7.693a.75.75 0 0 1 1.06 1.06l-7.693 7.693a5.25 5.25 0 1 1-7.424-7.424l10.939-10.94a3.75 3.75 0 1 1 5.303 5.304L9.097 18.835l-.008.008-.007.007-.002.002-.003.002A2.25 2.25 0 0 1 5.91 15.66l7.81-7.81a.75.75 0 0 1 1.061 1.06l-7.81 7.81a.75.75 0 0 0 1.054 1.068L18.97 6.84a2.25 2.25 0 0 0 0-3.182Z" clipRule="evenodd" />
                                                 </svg>
