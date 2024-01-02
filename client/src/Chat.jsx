@@ -20,7 +20,8 @@ export default function Chat(){
     }, [selectedUserId]);
 
     function connectToWs(){
-        const ws = new WebSocket(import.meta.env.WSS_URL);
+
+        const ws = new WebSocket('ws://nirmal-lets-chat.vercel.app/api');
         setWs(ws);
         ws.addEventListener('message',handleMessage);
         ws.addEventListener('close', () => {
