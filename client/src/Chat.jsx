@@ -20,7 +20,7 @@ export default function Chat(){
     }, [selectedUserId]);
 
     function connectToWs(){
-        const ws_end = 'ws://localhost:4000';
+        const ws_end = import.meta.env.CLIENT_URL;
         const ws = new WebSocket(ws_end);
         setWs(ws);
         ws.addEventListener('message',handleMessage);
