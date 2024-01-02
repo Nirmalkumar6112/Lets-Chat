@@ -17,10 +17,11 @@ export default function Chat(){
 
     useEffect(() => {
         connectToWs();
-    }, []);
+    }, [selectedUserId]);
 
     function connectToWs(){
-        const ws = new WebSocket('ws://localhost:4000');
+        const ws_end = 'ws://localhost:4000';
+        const ws = new WebSocket(ws_end);
         setWs(ws);
         ws.addEventListener('message',handleMessage);
         ws.addEventListener('close', () => {
@@ -61,18 +62,19 @@ export default function Chat(){
             file,        
         }));
         
-        setNewMessageText('');
-        setMessages(prev => ([...prev,{
-            text: newMessageText, 
-            sender: id,
-            recipient: selectedUserId,
-            _id: Date.now(),
-        }]));
-
         if(file){
-            axios.get('/message/' + selectedUserId).then(res => {
+            axios.get('/messages/' + selectedUserId).then(res => {
                 setMessages(res.data);
             });
+        }
+        else{
+            setNewMessageText('');
+            setMessages(prev => ([...prev,{
+                text: newMessageText, 
+                sender: id,
+                recipient: selectedUserId,
+                _id: Date.now(),
+            }]));
         }
     }
 
@@ -123,7 +125,7 @@ export default function Chat(){
                 setMessages(res.data);
             });
         }
-    });
+    },[selectedUserId]);
 
     const onlinePeopleExclOurUser = {...onlinePeople};
     delete onlinePeopleExclOurUser[id];
