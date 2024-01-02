@@ -20,8 +20,7 @@ export default function Chat(){
     }, [selectedUserId]);
 
     function connectToWs(){
-        const ws_end = import.meta.env.CLIENT_URL;
-        const ws = new WebSocket(ws_end);
+        const ws = new WebSocket(import.meta.env.WSS_URL);
         setWs(ws);
         ws.addEventListener('message',handleMessage);
         ws.addEventListener('close', () => {
@@ -192,7 +191,7 @@ export default function Chat(){
                                     {message.text}
                                     {message.file && (
                                         <div className="">
-                                            <a target="_blank" className="flex items-center gap-1 border-b" href={axios.defaults.baseURL + '/uploads/' + message.file}>
+                                            <a target="_blank" className="flex items-center gap-1 border-b" href={axios.defaults.baseURL + '/api/uploads/' + message.file}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                                                     <path fillRule="evenodd" d="M18.97 3.659a2.25 2.25 0 0 0-3.182 0l-10.94 10.94a3.75 3.75 0 1 0 5.304 5.303l7.693-7.693a.75.75 0 0 1 1.06 1.06l-7.693 7.693a5.25 5.25 0 1 1-7.424-7.424l10.939-10.94a3.75 3.75 0 1 1 5.303 5.304L9.097 18.835l-.008.008-.007.007-.002.002-.003.002A2.25 2.25 0 0 1 5.91 15.66l7.81-7.81a.75.75 0 0 1 1.061 1.06l-7.81 7.81a.75.75 0 0 0 1.054 1.068L18.97 6.84a2.25 2.25 0 0 0 0-3.182Z" clipRule="evenodd" />
                                                 </svg>
